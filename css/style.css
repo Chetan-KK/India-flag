@@ -22,3 +22,9 @@
   background-color: black;
   color: white;
 }
+a {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  color: white;
+}
