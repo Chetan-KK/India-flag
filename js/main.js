@@ -15,6 +15,11 @@ import StarsTexture from '../media/textures/stars/1.png';
 
 //canvas element
 const canvas = document.getElementById('firstCanvas');
+const loading = document.querySelector('.loading');
+
+function loaded() {
+    loading.style.display = "none";
+}
 
 //sizes
 const sizes = {
