@@ -4,6 +4,7 @@
 import * as THREE from 'three';
 import '../css/style.css';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import * as dat from 'dat.gui';
 
 //textures
 import FlagTexture from '../media/Flag_of_India.svg';
@@ -43,6 +44,9 @@ window.addEventListener('resize', () => {
 
 //scene
 const scene = new THREE.Scene();
+
+//gui
+const gui = new dat.GUI();
 
 /**
  * texture loader
@@ -103,25 +107,41 @@ flagBaseTop.receiveShadow = true;
 flagBaseTop.castShadow = true;
 scene.add(flagBaseTop);
 
-const flagRodMaterial = new THREE.MeshStandardMaterial();
-const flagRod = new THREE.Mesh(new THREE.CylinderBufferGeometry(.05, .05, 4, 16), flagRodMaterial);
+const flagRodMaterial = new THREE.MeshStandardMaterial({
+    metalness: 1,
+    roughness: .3
+});
+
+// gui.add(flagRodMaterial, "metalness").min(0).max(2).step(.1);
+// gui.add(flagRodMaterial, "roughness").min(0).max(2).step(.1);
+
+const flagRod = new THREE.Mesh(new THREE.CylinderBufferGeometry(.05, .05, 4.2, 16), flagRodMaterial);
 flagRod.position.y = 2;
 flagRod.castShadow = true;
 scene.add(flagRod);
 
+const flagGeometry = new THREE.PlaneGeometry(2, 1, 15, 9);
 const flagMaterial = new THREE.MeshStandardMaterial({
     side: THREE.DoubleSide,
-    map: flagTexture
+    map: flagTexture,
+    // wireframe: true
 });
-const flag = new THREE.Mesh(new THREE.PlaneBufferGeometry(2, 1), flagMaterial);
+
+const flag = new THREE.Mesh(flagGeometry, flagMaterial);
 flag.position.set(1, 3.5, 0);
 flag.castShadow = true;
+
 scene.add(flag);
+
+function flagAnimation() {
+
+}
+flagAnimation();
 
 //stars
 const starsGeometry = new THREE.BufferGeometry();
 
-const starsCount = 200;
+const starsCount = 800;
 
 const starsPositions = new Float32Array(starsCount * 3);
 const starsColor = new Float32Array(starsCount * 3);
@@ -130,9 +150,9 @@ for (let i = 0; i < starsCount; i++) {
 
     let position = i * 3;
 
-    starsPositions[position] = (Math.random() - .5) * 8;
-    starsPositions[position + 1] = (Math.random() - .5) * 8;
-    starsPositions[position + 2] = (Math.random() - .5) * 8;
+    starsPositions[position] = (Math.random() - .5) * 20;
+    starsPositions[position + 1] = (Math.random() - .5) * 20;
+    starsPositions[position + 2] = (Math.random() - .5) * 20;
 
     starsColor[position] = (Math.random() - .5);
     starsColor[position + 1] = (Math.random() - .5);
@@ -151,7 +171,6 @@ const startsMaterial = new THREE.PointsMaterial({
     alphaMap: starsTexture,
     depthWrite: false,
     transparent: true
-
 });
 
 const stars = new THREE.Points(starsGeometry, startsMaterial);
@@ -202,7 +221,10 @@ const tick = () => {
     controls.update();
 
     //animations
-    directionalLight.position.set(Math.sin(elapsedTime) + 4, Math.sin(elapsedTime) + 4, 4);
+    // directionalLight.position.set(Math.sin(elapsedTime) + 4, Math.sin(elapsedTime) + 4, 4);
+    stars.rotation.set(elapsedTime / 9, elapsedTime / 10, 0);
+
+    flag.geometry.verticesNeedUpdate = true;
 
     //renderer update
     renderer.render(scene, camera);
