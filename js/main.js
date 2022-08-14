@@ -5,6 +5,14 @@ import * as THREE from 'three';
 import '../css/style.css';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
+//textures
+import FlagTexture from '../media/Flag_of_India.svg';
+import FlagGroundTexture from '../media/textures/ground/ground.jpg';
+import FlagBaseTexture from '../media/textures/concrete/concrete.png';
+import FlagBaseNormalTexture from '../media/textures/concrete/normal.png';
+import StarsTexture from '../media/textures/stars/1.png';
+
+
 //canvas element
 const canvas = document.getElementById('firstCanvas');
 
@@ -34,12 +42,18 @@ const scene = new THREE.Scene();
 /**
  * texture loader
  */
-const textureLoader = new THREE.TextureLoader();
-const flagTexture = textureLoader.load('/Flag_of_India.svg');
-const flagGroundTexture = textureLoader.load('/textures/ground/ground.jpg');
-const flagBaseTexture = textureLoader.load('/textures/concrete/concrete.png');
-const flagBaseNormalTexture = textureLoader.load('/textures/concrete/normal.png');
-const starsTexture = textureLoader.load('../static/stars/1.png');
+const loadingManager = new THREE.LoadingManager(
+    () => {
+        loaded();
+    }
+);
+
+const textureLoader = new THREE.TextureLoader(loadingManager);
+const flagTexture = textureLoader.load(FlagTexture);
+const flagGroundTexture = textureLoader.load(FlagGroundTexture);
+const flagBaseTexture = textureLoader.load(FlagBaseTexture);
+const flagBaseNormalTexture = textureLoader.load(FlagBaseNormalTexture);
+const starsTexture = textureLoader.load(StarsTexture);
 
 /**
  * lights
