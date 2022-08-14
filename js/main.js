@@ -35,11 +35,11 @@ const scene = new THREE.Scene();
  * texture loader
  */
 const textureLoader = new THREE.TextureLoader();
-const flagTexture = textureLoader.load('../static/Flag_of_India.svg');
-const flagGroundTexture = textureLoader.load('../static/textures/ground/ground.jpg');
-const flagBaseTexture = textureLoader.load('../static/textures/concrete/concrete.png');
-const flagBaseNormalTexture = textureLoader.load('../static/textures/concrete/normal.png');
-const starsTexture = textureLoader.load('../static/textures/stars/1.png');
+const flagTexture = textureLoader.load('/Flag_of_India.svg');
+const flagGroundTexture = textureLoader.load('/textures/ground/ground.jpg');
+const flagBaseTexture = textureLoader.load('/textures/concrete/concrete.png');
+const flagBaseNormalTexture = textureLoader.load('/textures/concrete/normal.png');
+const starsTexture = textureLoader.load('../static/stars/1.png');
 
 /**
  * lights
