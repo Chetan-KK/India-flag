@@ -13,6 +13,8 @@ import FlagBaseTexture from '../media/textures/concrete/concrete.png';
 import FlagBaseNormalTexture from '../media/textures/concrete/normal.png';
 import StarsTexture from '../media/textures/stars/1.png';
 
+//model
+// import FlagModel from '';
 
 //canvas element
 const canvas = document.getElementById('firstCanvas');
@@ -64,6 +66,7 @@ const flagBaseTexture = textureLoader.load(FlagBaseTexture);
 const flagBaseNormalTexture = textureLoader.load(FlagBaseNormalTexture);
 const starsTexture = textureLoader.load(StarsTexture);
 
+
 /**
  * lights
  */
@@ -77,6 +80,11 @@ directionalLight.shadow.mapSize.x = 1024;
 directionalLight.shadow.mapSize.y = 1024;
 directionalLight.castShadow;
 scene.add(directionalLight);
+
+gui.add(directionalLight, 'intensity').min(0).max(5).step(.001).name('light intencity');
+gui.add(directionalLight.position, 'x').min(-5).max(5).step(.001).name('light x');
+gui.add(directionalLight.position, 'y').min(-5).max(5).step(.001).name('light y');
+gui.add(directionalLight.position, 'z').min(-5).max(5).step(.001).name('light z');
 
 /**
  * objects
@@ -111,9 +119,6 @@ const flagRodMaterial = new THREE.MeshStandardMaterial({
     metalness: 1,
     roughness: .3
 });
-
-// gui.add(flagRodMaterial, "metalness").min(0).max(2).step(.1);
-// gui.add(flagRodMaterial, "roughness").min(0).max(2).step(.1);
 
 const flagRod = new THREE.Mesh(new THREE.CylinderBufferGeometry(.05, .05, 4.2, 16), flagRodMaterial);
 flagRod.position.y = 2;
@@ -189,8 +194,8 @@ scene.add(camera);
  */
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
-controls.maxPolarAngle = Math.PI / 2 - .2;
-controls.enableZoom = false;
+// controls.maxPolarAngle = Math.PI / 2 - .2;
+// controls.enableZoom = false;
 
 /**
  * renderer
